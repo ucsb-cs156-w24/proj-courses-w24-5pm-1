@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Courses/PSCourseCreatePage.js</title>
+    <title>Code coverage report for components/CourseDetails/CourseDetailsTable.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Courses</a> PSCourseCreatePage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/CourseDetails</a> CourseDetailsTable.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -126,17 +126,7 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -145,34 +135,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,73 +164,93 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import CourseForm from "main/components/Courses/CourseForm";
-import { Navigate } from "react-router-dom";
-import { useBackendMutation } from "main/utils/useBackend";
-import { toast } from "react-toastify";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
+import OurTable from "main/components/OurTable";
+import {
+  convertToFraction,
+  formatInstructors,
+  formatLocation,
+  formatTime,
+} from "main/utils/sectionUtils.js";
 &nbsp;
-export default function CoursesCreatePage() {
-  const objectToAxiosParams = (course) =&gt; ({
-    url: "/api/courses/post",
-    method: "POST",
-    params: {
-      enrollCd: course.enrollCd,
-      psId: course.psId,
+export default function CourseDetailsTable({ details }) {
+  const columns = [
+    {
+      Header: "Course ID",
+      accessor: "courseId",
     },
-  });
+    {
+      Header: "Enroll Code",
+      accessor: "classSections[0].enrollCode",
+    },
+    {
+      Header: "Section",
+      accessor: "classSections[0].section",
+    },
+    {
+      Header: "Title",
+      accessor: "title",
+    },
+    {
+      Header: "Enrolled",
+      accessor: (row) =&gt;
+        convertToFraction(
+          row.classSections[0].enrolledTotal,
+          row.classSections[0].maxEnroll,
+        ),
+      id: "enrolled",
+    },
+    {
+      Header: "Location",
+      accessor: (row) =&gt; formatLocation(row.classSections[0].timeLocations),
+      id: "location",
+    },
+    {
+      Header: "Days",
+      accessor: "classSections[0].timeLocations[0].days",
+    },
+    {
+      Header: "Time",
+      accessor: (row) =&gt; formatTime(row.classSections[0].timeLocations),
+      id: "time",
+    },
+    {
+      Header: "Instructor",
+      accessor: (row) =&gt; formatInstructors(row.classSections[0].instructors),
+      id: "instructor",
+    },
+  ];
 &nbsp;
-  const onSuccess = (course) =&gt; {
-    toast(
-      `New course Created - id: ${course[0].id} enrollCd: ${course[0].enrollCd}`,
-    );
-  };
+  const testid = "CourseDetailsTable";
 &nbsp;
-  const mutation = useBackendMutation(
-    objectToAxiosParams,
-    { onSuccess },
-    // Stryker disable next-line all : hard to set up test for caching
-    ["/api/courses/user/all"],
-  );
+  const columnsToDisplay = columns;
 &nbsp;
-  const { isSuccess } = mutation;
-&nbsp;
-  const onSubmit = async (data) =&gt; {
-    const psId = {
-      psId: localStorage["CourseForm-psId"],
-    };
-    const dataFinal = Object.assign(data, psId);
-    mutation.mutate(dataFinal);
-  };
-&nbsp;
-  if (isSuccess) {
-    return &lt;Navigate to="/courses/list" /&gt;;
-  }
-  if (mutation.isError) {
-    return (
-      &lt;BasicLayout&gt;
-        &lt;div className="pt-2"&gt;
-          &lt;h1&gt;Create New Course&lt;/h1&gt;
-&nbsp;
-          &lt;CourseForm submitAction={onSubmit} /&gt;
-          &lt;p data-testid="PSCourseCreate-Error"&gt;
-            Error: {mutation.error.response.data?.message}
-          &lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/BasicLayout&gt;
-    );
-  }
-  return (
-    &lt;BasicLayout&gt;
-      &lt;div className="pt-2"&gt;
-        &lt;h1&gt;Create New Course&lt;/h1&gt;
-&nbsp;
-        &lt;CourseForm submitAction={onSubmit} /&gt;
-      &lt;/div&gt;
-    &lt;/BasicLayout&gt;
-  );
+  return &lt;OurTable data={details} columns={columnsToDisplay} testid={testid} /&gt;;
 }
 &nbsp;</pre></td></tr></table></pre>
 
