@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-w24/proj-courses-w24-5pm-1
 owner: ucsb-cs156-w24
 repo_name: proj-courses-w24-5pm-1
-pull_requests: []
+pull_requests: [{"author":{"id":"U_kgDOB3BkNQ","is_bot":false,"login":"TantaiYanhen","name":"Sam Bian"},"headRefName":"Sam-dev","number":25,"title":"Add link to developer/GH info in Admin dropdown","url":"https://github.com/ucsb-cs156-w24/proj-courses-w24-5pm-1/pull/25"}]
