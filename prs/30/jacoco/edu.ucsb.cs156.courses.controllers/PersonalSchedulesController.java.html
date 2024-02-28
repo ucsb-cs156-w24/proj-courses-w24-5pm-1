@@ -112,21 +112,21 @@ import org.springframework.web.bind.annotation.RestController;
   @Operation(summary = &quot;Delete a personal schedule owned by this user&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @DeleteMapping(&quot;&quot;)
-    public Object deleteSchedule(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L116">        User currentUser = getCurrentUser().getUser();</span>
-<span class="fc" id="L117">        PersonalSchedule personalschedule =</span>
+  public Object deleteSchedule(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L116">    User currentUser = getCurrentUser().getUser();</span>
+<span class="fc" id="L117">    PersonalSchedule personalschedule =</span>
         personalscheduleRepository
 <span class="fc" id="L119">            .findByIdAndUser(id, currentUser)</span>
 <span class="fc" id="L120">            .orElseThrow(() -&gt; new EntityNotFoundException(PersonalSchedule.class, id));</span>
 
-<span class="fc" id="L122">        Iterable&lt;PSCourse&gt; psCourses = psCourseRepository.findAllByPsId(personalschedule.getId());</span>
-<span class="fc" id="L123">        psCourses.forEach(psCourse -&gt; psCourseRepository.delete(psCourse));</span>
+<span class="fc" id="L122">    Iterable&lt;PSCourse&gt; psCourses = psCourseRepository.findAllByPsId(personalschedule.getId());</span>
+<span class="fc" id="L123">    psCourses.forEach(psCourse -&gt; psCourseRepository.delete(psCourse));</span>
 
-        // Then, delete the PersonalSchedule itself
-<span class="fc" id="L126">        personalscheduleRepository.delete(personalschedule);</span>
+    // Then, delete the PersonalSchedule itself
+<span class="fc" id="L126">    personalscheduleRepository.delete(personalschedule);</span>
 
-<span class="fc" id="L128">        return genericMessage(&quot;PersonalSchedule with id %s deleted&quot;.formatted(id));</span>
-    }
+<span class="fc" id="L128">    return genericMessage(&quot;PersonalSchedule with id %s deleted&quot;.formatted(id));</span>
+  }
 
   @Operation(summary = &quot;Delete another user's personal schedule&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
