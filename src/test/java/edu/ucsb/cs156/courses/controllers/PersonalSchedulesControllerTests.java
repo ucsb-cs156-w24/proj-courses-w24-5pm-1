@@ -19,9 +19,9 @@ import edu.ucsb.cs156.courses.repositories.UserRepository;
 import edu.ucsb.cs156.courses.testconfig.TestConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,7 +38,6 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
 
   @MockBean PersonalScheduleRepository personalscheduleRepository;
   @MockBean PSCourseRepository psCourseRepository;
-
 
   @MockBean UserRepository userRepository;
 
@@ -864,35 +863,35 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
   @WithMockUser(roles = {"USER"}) // Adjust based on actual security requirements
   @Test
   public void deleting_removes_associated_courses() throws Exception {
-      // arrange
-      User u = currentUserService.getCurrentUser().getUser();
-      PersonalSchedule ps1 = PersonalSchedule.builder()
-              .name("Name 1")
-              .description("Description 1")
-              .quarter("20221")
-              .user(u)
-              .id(15L)
-              .build();
-  
-      List<PSCourse> associatedCourses = List.of(
-          new PSCourse(/* initialization */),
-          new PSCourse(/* initialization */)
-      ); // Mock returning these courses when findAllByPsId is called
-  
-      when(personalscheduleRepository.findByIdAndUser(eq(15L), eq(u))).thenReturn(Optional.of(ps1));
-      when(psCourseRepository.findAllByPsId(eq(15L))).thenReturn(associatedCourses);
-  
-      // act
-      mockMvc.perform(delete("/api/personalschedules?id=15").with(csrf())).andExpect(status().isOk());
-  
-      // assert
-      verify(personalscheduleRepository, times(1)).findByIdAndUser(15L, u);
-      // Assuming each PSCourse should be deleted exactly once
-associatedCourses.forEach(psCourse ->
-    verify(psCourseRepository, times(2)).delete(psCourse)
-);
+    // arrange
+    User u = currentUserService.getCurrentUser().getUser();
+    PersonalSchedule ps1 =
+        PersonalSchedule.builder()
+            .name("Name 1")
+            .description("Description 1")
+            .quarter("20221")
+            .user(u)
+            .id(15L)
+            .build();
 
-      verify(personalscheduleRepository, times(1)).delete(ps1);
+    List<PSCourse> associatedCourses =
+        List.of(
+            new PSCourse(/* initialization */ ),
+            new PSCourse(
+                /* initialization */ )); // Mock returning these courses when findAllByPsId is
+    // called
+
+    when(personalscheduleRepository.findByIdAndUser(eq(15L), eq(u))).thenReturn(Optional.of(ps1));
+    when(psCourseRepository.findAllByPsId(eq(15L))).thenReturn(associatedCourses);
+
+    // act
+    mockMvc.perform(delete("/api/personalschedules?id=15").with(csrf())).andExpect(status().isOk());
+
+    // assert
+    verify(personalscheduleRepository, times(1)).findByIdAndUser(15L, u);
+    // Assuming each PSCourse should be deleted exactly once
+    associatedCourses.forEach(psCourse -> verify(psCourseRepository, times(2)).delete(psCourse));
+
+    verify(personalscheduleRepository, times(1)).delete(ps1);
   }
-  
 }

@@ -112,21 +112,21 @@ public class PersonalSchedulesController extends ApiController {
   @Operation(summary = "Delete a personal schedule owned by this user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @DeleteMapping("")
-    public Object deleteSchedule(@Parameter(name = "id") @RequestParam Long id) {
-        User currentUser = getCurrentUser().getUser();
-        PersonalSchedule personalschedule =
+  public Object deleteSchedule(@Parameter(name = "id") @RequestParam Long id) {
+    User currentUser = getCurrentUser().getUser();
+    PersonalSchedule personalschedule =
         personalscheduleRepository
             .findByIdAndUser(id, currentUser)
             .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
 
-        Iterable<PSCourse> psCourses = psCourseRepository.findAllByPsId(personalschedule.getId());
-        psCourses.forEach(psCourse -> psCourseRepository.delete(psCourse));
+    Iterable<PSCourse> psCourses = psCourseRepository.findAllByPsId(personalschedule.getId());
+    psCourses.forEach(psCourse -> psCourseRepository.delete(psCourse));
 
-        // Then, delete the PersonalSchedule itself
-        personalscheduleRepository.delete(personalschedule);
+    // Then, delete the PersonalSchedule itself
+    personalscheduleRepository.delete(personalschedule);
 
-        return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
-    }
+    return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
+  }
 
   @Operation(summary = "Delete another user's personal schedule")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
