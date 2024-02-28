@@ -41,18 +41,38 @@ export default function CoursesCreatePage() {
     return <Navigate to="/courses/list" />;
   }
   if (mutation.isError) {
-    return (
-      <BasicLayout>
-        <div className="pt-2">
-          <h1>Create New Course</h1>
-
-          <CourseForm submitAction={onSubmit} />
-          <p data-testid="PSCourseCreate-Error">
-            Error: {mutation.error.response.data?.message}
-          </p>
-        </div>
-      </BasicLayout>
-    );
+    if(mutation.error.response?.data?.message == "Required request parameter 'psId' for method parameter type Long is not present"){
+      return (
+        <BasicLayout>
+          <div className="pt-2">
+            <h1>Create New Course</h1>
+  
+            <CourseForm submitAction={onSubmit} />
+            <br/>
+            <p data-testid="PSCourseCreate-Error">
+              Error: Schedule Required
+            </p>
+            
+            <button  style={{backgroundColor: '#34859b', color: 'white', padding: '10px', border:'none', borderRadius:"5px"}} onClick={() => window.location.href = '/personalschedules/create'}>Create Shchedule</button>
+          </div>
+        </BasicLayout>
+      );
+    }
+    else{
+      return (
+        <BasicLayout>
+          <div className="pt-2">
+            <h1>Create New Course</h1>
+  
+            <CourseForm submitAction={onSubmit} />
+            <p data-testid="PSCourseCreate-Error">
+              Error: {mutation.error.response.data?.message}
+            </p>
+          </div>
+        </BasicLayout>
+      );
+    }
+    
   }
   return (
     <BasicLayout>
