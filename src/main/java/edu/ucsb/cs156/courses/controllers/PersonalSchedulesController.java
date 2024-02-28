@@ -1,9 +1,11 @@
 package edu.ucsb.cs156.courses.controllers;
 
+import edu.ucsb.cs156.courses.entities.PSCourse;
 import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.models.CurrentUser;
+import edu.ucsb.cs156.courses.repositories.PSCourseRepository;
 import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalSchedulesController extends ApiController {
 
   @Autowired PersonalScheduleRepository personalscheduleRepository;
+
+  @Autowired PSCourseRepository psCourseRepository;
 
   @Operation(summary = "List all personal schedules")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -108,17 +112,21 @@ public class PersonalSchedulesController extends ApiController {
   @Operation(summary = "Delete a personal schedule owned by this user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @DeleteMapping("")
-  public Object deleteSchedule(@Parameter(name = "id") @RequestParam Long id) {
-    User currentUser = getCurrentUser().getUser();
-    PersonalSchedule personalschedule =
+    public Object deleteSchedule(@Parameter(name = "id") @RequestParam Long id) {
+        User currentUser = getCurrentUser().getUser();
+        PersonalSchedule personalschedule =
         personalscheduleRepository
             .findByIdAndUser(id, currentUser)
             .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, id));
 
-    personalscheduleRepository.delete(personalschedule);
+        Iterable<PSCourse> psCourses = psCourseRepository.findAllByPsId(personalschedule.getId());
+        psCourses.forEach(psCourse -> psCourseRepository.delete(psCourse));
 
-    return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
-  }
+        // Then, delete the PersonalSchedule itself
+        personalscheduleRepository.delete(personalschedule);
+
+        return genericMessage("PersonalSchedule with id %s deleted".formatted(id));
+    }
 
   @Operation(summary = "Delete another user's personal schedule")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
