@@ -22,7 +22,7 @@ export default function CourseDetailsIndexPage() {
         qtr,
         enrollCode,
       },
-    }
+    },
   );
 
   return (

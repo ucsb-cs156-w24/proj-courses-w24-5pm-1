@@ -65,7 +65,7 @@ describe("Course Details Index Page tests", () => {
         <MemoryRouter>
           <CourseDetailsIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
   });
 
@@ -75,11 +75,11 @@ describe("Course Details Index Page tests", () => {
         <MemoryRouter>
           <CourseDetailsIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
     // await waitFor(() => {
     expect(
-      screen.getByText("Course Details for CHEM 184 W22!")
+      screen.getByText("Course Details for CHEM 184 W22!"),
     ).toBeInTheDocument();
     // });
     expect(screen.getByText("Enroll Code")).toBeInTheDocument();
@@ -99,8 +99,8 @@ describe("Course Details Index Page tests", () => {
     expect(screen.getByText("Course Description")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Lectures and exercises on the literature and other information resources of use in chemistry."
-      )
+        "Lectures and exercises on the literature and other information resources of use in chemistry.",
+      ),
     ).toBeInTheDocument();
   });
 });
