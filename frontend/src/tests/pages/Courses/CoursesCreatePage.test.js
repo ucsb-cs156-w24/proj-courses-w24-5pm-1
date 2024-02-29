@@ -136,32 +136,32 @@ describe("CoursesCreatePage tests", () => {
     expect(PSError).toBeInTheDocument();
   });
 
-  // test("sets schedule and updates localStorage when schedules are available", async () => {
-  //   console.log("Inside Last Test");
-  //   const queryClient = new QueryClient();
+  test("sets schedule and updates localStorage when schedules are available", async () => {
+    console.log("Inside Last Test");
+    const queryClient = new QueryClient();
 
-  //   axiosMock.onGet("/api/personalschedules/all").reply(200, [
-  //     {
-  //       id: 17,
-  //       name: "SampName",
-  //       description: "desc",
-  //       quarter: "W08",
-  //     },
-  //   ]);
+    axiosMock.onGet("/api/personalschedules/all").reply(200, [
+      {
+        id: 17,
+        name: "SampName",
+        description: "desc",
+        quarter: "W08",
+      },
+    ]);
 
-  //   render(
-  //     <QueryClientProvider client={queryClient}>
-  //       <MemoryRouter>
-  //         <CoursesCreatePage />
-  //       </MemoryRouter>
-  //     </QueryClientProvider>,
-  //   );
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <CoursesCreatePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
 
-  //   expect(
-  //     await screen.findByTestId("CourseForm-enrollCd"),
-  //   ).toBeInTheDocument();
-  //   expect(localStorage.getItem("CourseForm-psId")).toBe("17");
-  // });
+    expect(
+      await screen.findByTestId("CourseForm-enrollCd"),
+    ).toBeInTheDocument();
+    expect(localStorage.getItem("CourseForm-psId")).toBe("17");
+  });
 
   // test("displays error message and button for creating schedule when psId is not provided", async () => {
   //   // Mocking the backend response to simulate an error
