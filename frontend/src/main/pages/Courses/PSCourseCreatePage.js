@@ -41,29 +41,29 @@ export default function CoursesCreatePage() {
     return <Navigate to="/courses/list" />;
   }
   if (mutation.isError) {
-    const errorMessage = mutation.error.response?.data?.message || "Unknown error";
-  
+    const errorMessage =
+      mutation.error.response.data?.message || "Unknown error";
+
     if (errorMessage.includes("psId")) {
       return (
         <BasicLayout>
           <div className="pt-2">
             <h1>Create New Course</h1>
-  
+
             <CourseForm submitAction={onSubmit} />
             <br />
-            <p data-testid="PSCourseCreate-Error">
-              Error: Schedule Required
-            </p>
-  
+            <p data-testid="PSCourseCreate-Error">Error: Schedule Required</p>
+
             <button
               style={{
                 backgroundColor: "#34859b",
                 color: "white",
                 padding: "10px",
-                border: "none",
                 borderRadius: "5px",
               }}
-              onClick={() => window.location.href = '/personalschedules/create'}
+              onClick={() =>
+                (window.location.href = "/personalschedules/create")
+              }
             >
               Create Schedule
             </button>
@@ -75,17 +75,13 @@ export default function CoursesCreatePage() {
         <BasicLayout>
           <div className="pt-2">
             <h1>Create New Course</h1>
-  
+
             <CourseForm submitAction={onSubmit} />
-            <p data-testid="PSCourseCreate-Error">
-              Error: {errorMessage}
-            </p>
+            <p data-testid="PSCourseCreate-Error">Error: {errorMessage}</p>
           </div>
         </BasicLayout>
       );
     }
-  
-  
   }
   return (
     <BasicLayout>
