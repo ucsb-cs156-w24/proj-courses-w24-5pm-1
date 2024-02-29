@@ -7,6 +7,7 @@ import {
   fiveSections,
   gigaSections,
 } from "fixtures/sectionFixtures";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
 export default {
   title: "components/Sections/SectionsTable",
@@ -35,10 +36,24 @@ ThreeSections.args = {
   sections: threeSections,
 };
 
+export const ThreeSectionsUser = Template.bind({});
+
+ThreeSectionsUser.args = {
+  sections: threeSections,
+  currentUser: currentUserFixtures.userOnly,
+};
+
 export const FiveSections = Template.bind({});
 
 FiveSections.args = {
   sections: fiveSections,
+};
+
+export const FiveSectionsUser = Template.bind({});
+
+FiveSectionsUser.args = {
+  sections: fiveSections,
+  currentUser: currentUserFixtures.userOnly,
 };
 
 export const GigaSections = Template.bind({});
