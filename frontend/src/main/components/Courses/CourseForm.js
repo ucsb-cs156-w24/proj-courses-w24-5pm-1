@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import PersonalScheduleDropdown from "../PersonalSchedules/PersonalScheduleDropdown";
 import { useBackend } from "main/utils/useBackend";
 
-function CourseForm({ initialCourse, submitAction, buttonLabel = "Create" }) {
+
+function CourseForm({ initialCourse, submitAction, buttonLabel = "Create", codeEditable = true, enrollmentCode}) {
   // Stryker disable all
   const {
     register,
@@ -71,6 +72,8 @@ function CourseForm({ initialCourse, submitAction, buttonLabel = "Create" }) {
           {...register("enrollCd", {
             required: "Enroll Code is required.",
           })}
+          value={enrollmentCode}
+          readOnly={!codeEditable}
         />
         <Form.Control.Feedback type="invalid">
           {errors.enrollCd?.message}
@@ -84,6 +87,9 @@ function CourseForm({ initialCourse, submitAction, buttonLabel = "Create" }) {
           setSchedule={setSchedule}
           controlId={"CourseForm-psId"}
         />
+        {/* {schedules && schedules.length === 0 && ( */}
+          <Link to="/personalschedules/create">Add New Personal Schedule</Link>
+        {/* )} */}
       </Form.Group>
 
       <Button type="submit" data-testid="CourseForm-submit">

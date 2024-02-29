@@ -1,8 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor} from "@testing-library/react";
 import { fiveSections, gigaSections } from "fixtures/sectionFixtures";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import SectionsTable from "main/components/Sections/SectionsTable";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
 const mockedNavigate = jest.fn();
 
@@ -22,6 +23,21 @@ describe("Section tests", () => {
         </MemoryRouter>
       </QueryClientProvider>,
     );
+  });
+
+  test("renders without crashing for empty table for user", () => {
+    const currentUser = currentUserFixtures.adminUser;
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SectionsTable sections={[]} 
+          currentUser={currentUser}/>
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    const header = screen.getByText("Add");
+    expect(header).toBeInTheDocument();
   });
 
   test("Has the expected cell values when expanded", () => {
@@ -97,6 +113,82 @@ describe("Section tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-2-col-instructor`),
     ).toHaveTextContent("YUNG A S");
+  });
+
+  test("Has the expected cell values when expanded for user", () => {
+    const currentUser = currentUserFixtures.adminUser;
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SectionsTable sections={fiveSections} 
+          currentUser={currentUser}/>
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    const expectedFields = [
+      "quarter",
+      "courseInfo.courseId",
+      "courseInfo.title",
+      "status",
+      "enrolled",
+      "location",
+      "days",
+      "time",
+      "instructor",
+      "section.enrollCode",
+      "info",
+      "add"
+    ];
+    const testId = "SectionsTable";
+
+    expectedFields.forEach((field) => {
+      const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    }); 
+    const expandRow = screen.getByTestId(
+      `${testId}-cell-row-1-col-courseInfo.courseId-expand-symbols`,
+    );
+    fireEvent.click(expandRow);
+    const addButton = screen.getByTestId(
+      `${testId}-cell-row-2-col-add`,
+    );
+    expect(addButton).toBeInTheDocument();
+    const addButton3 = screen.getByTestId(
+      `${testId}-cell-row-0-col-add`,
+    );
+    expect(addButton3).toBeInTheDocument();
+    const addButton2 = screen.getByTestId(
+      `${testId}-cell-row-1-col-add`,
+    );
+    expect(addButton2).toBeEmpty();
+  });
+
+  test("add button navigates to the create page for Ordinary user", async () => {
+    const currentUser = currentUserFixtures.adminUser;
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SectionsTable sections={fiveSections} 
+          currentUser={currentUser}/>
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+    const testId = "SectionsTable";
+    const expandRow = screen.getByTestId(
+      `${testId}-cell-row-1-col-courseInfo.courseId-expand-symbols`,
+    );
+    fireEvent.click(expandRow);
+    const addButton = screen.getByTestId(
+      `add-button-12583`,
+    );
+    fireEvent.click(addButton);
+
+    await waitFor(() =>
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/courses/create/12583",
+      ),
+    );
   });
 
   test("Has the expected column headers and content", async () => {

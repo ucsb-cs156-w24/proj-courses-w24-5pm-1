@@ -12,14 +12,29 @@ import {
   formatInfoLink,
   renderInfoLink,
 } from "main/utils/sectionUtils.js";
+import { useNavigate } from "react-router-dom";
+import { hasRole } from "main/utils/currentUser";
 
 function getFirstVal(values) {
   return values[0];
 }
 
-export default function SectionsTable({ sections }) {
+function getVal(values) {
+  if(values.length>1){
+    return null;
+  }
+  return values[0];
+}
+
+export default function SectionsTable({ sections, currentUser}) {
   // Stryker restore all
   // Stryker disable BooleanLiteral
+  const navigate = useNavigate();
+
+  const addCallback = (courseId) => {
+    navigate(`/courses/create/${courseId}`);
+  };
+
   const columns = [
     {
       Header: "Quarter",
@@ -126,9 +141,26 @@ export default function SectionsTable({ sections }) {
     },
   ];
 
+  const columnsIfUser = [
+    ...columns,
+    {
+      Header: "Add",
+      id: "add",
+      disableGroupBy: true,
+      aggregate: getVal,
+      accessor: (row) => {
+          return (
+            <button onClick={() => addCallback(row.section.enrollCode)}data-testid={`add-button-${row.section.enrollCode}`}>Add</button>
+          );
+      },
+    },
+  ];
+
   const testid = "SectionsTable";
 
-  const columnsToDisplay = columns;
+  const columnsToDisplay = hasRole(currentUser, "ROLE_USER")
+  ? columnsIfUser
+  : columns;
 
   return (
     <SectionsTableBase
