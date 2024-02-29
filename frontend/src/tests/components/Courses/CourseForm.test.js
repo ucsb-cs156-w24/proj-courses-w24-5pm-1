@@ -26,7 +26,9 @@ describe("CourseForm tests", () => {
     expect(screen.getByText(/Enrollment Code/)).toBeInTheDocument();
     expect(screen.getByText(/Create/)).toBeInTheDocument();
     expect(screen.getByText(/Add New Personal Schedule/)).toBeInTheDocument();
-    expect(screen.getByTestId("CourseForm-enrollCd")).not.toHaveAttribute('readOnly');
+    expect(screen.getByTestId("CourseForm-enrollCd")).not.toHaveAttribute(
+      "readOnly",
+    );
   });
 
   test("renders correctly when passing in a Course", async () => {

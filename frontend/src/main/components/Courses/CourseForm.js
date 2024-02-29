@@ -5,8 +5,13 @@ import { useNavigate, Link } from "react-router-dom";
 import PersonalScheduleDropdown from "../PersonalSchedules/PersonalScheduleDropdown";
 import { useBackend } from "main/utils/useBackend";
 
-
-function CourseForm({ initialCourse, submitAction, buttonLabel = "Create", codeEditable = true, enrollmentCode}) {
+function CourseForm({
+  initialCourse,
+  submitAction,
+  buttonLabel = "Create",
+  codeEditable = true,
+  enrollmentCode,
+}) {
   // Stryker disable all
   const {
     register,
@@ -88,7 +93,7 @@ function CourseForm({ initialCourse, submitAction, buttonLabel = "Create", codeE
           controlId={"CourseForm-psId"}
         />
         {/* {schedules && schedules.length === 0 && ( */}
-          <Link to="/personalschedules/create">Add New Personal Schedule</Link>
+        <Link to="/personalschedules/create">Add New Personal Schedule</Link>
         {/* )} */}
       </Form.Group>
 

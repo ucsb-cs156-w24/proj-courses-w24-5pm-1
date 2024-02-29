@@ -20,13 +20,13 @@ function getFirstVal(values) {
 }
 
 function getVal(values) {
-  if(values.length>1){
+  if (values.length > 1) {
     return null;
   }
   return values[0];
 }
 
-export default function SectionsTable({ sections, currentUser}) {
+export default function SectionsTable({ sections, currentUser }) {
   // Stryker restore all
   // Stryker disable BooleanLiteral
   const navigate = useNavigate();
@@ -149,9 +149,14 @@ export default function SectionsTable({ sections, currentUser}) {
       disableGroupBy: true,
       aggregate: getVal,
       accessor: (row) => {
-          return (
-            <button onClick={() => addCallback(row.section.enrollCode)}data-testid={`add-button-${row.section.enrollCode}`}>Add</button>
-          );
+        return (
+          <button
+            onClick={() => addCallback(row.section.enrollCode)}
+            data-testid={`add-button-${row.section.enrollCode}`}
+          >
+            Add
+          </button>
+        );
       },
     },
   ];
@@ -159,8 +164,8 @@ export default function SectionsTable({ sections, currentUser}) {
   const testid = "SectionsTable";
 
   const columnsToDisplay = hasRole(currentUser, "ROLE_USER")
-  ? columnsIfUser
-  : columns;
+    ? columnsIfUser
+    : columns;
 
   return (
     <SectionsTableBase

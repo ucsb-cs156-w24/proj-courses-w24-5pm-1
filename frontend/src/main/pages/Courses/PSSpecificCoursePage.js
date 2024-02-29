@@ -60,8 +60,13 @@ export default function SpecificCoursesCreatePage() {
     <BasicLayout>
       <div className="pt-2">
         <h1>Add Specific Course</h1>
-        
-        <CourseForm submitAction={onSubmit} buttonLabel = "Add" codeEditable = {false} enrollmentCode = {enrollmentcode} />
+
+        <CourseForm
+          submitAction={onSubmit}
+          buttonLabel="Add"
+          codeEditable={false}
+          enrollmentCode={enrollmentcode}
+        />
       </div>
     </BasicLayout>
   );

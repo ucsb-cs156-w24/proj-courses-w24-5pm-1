@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { fiveSections, gigaSections } from "fixtures/sectionFixtures";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -30,8 +30,7 @@ describe("Section tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <SectionsTable sections={[]} 
-          currentUser={currentUser}/>
+          <SectionsTable sections={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -120,8 +119,7 @@ describe("Section tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <SectionsTable sections={fiveSections} 
-          currentUser={currentUser}/>
+          <SectionsTable sections={fiveSections} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -138,29 +136,23 @@ describe("Section tests", () => {
       "instructor",
       "section.enrollCode",
       "info",
-      "add"
+      "add",
     ];
     const testId = "SectionsTable";
 
     expectedFields.forEach((field) => {
       const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
       expect(header).toBeInTheDocument();
-    }); 
+    });
     const expandRow = screen.getByTestId(
       `${testId}-cell-row-1-col-courseInfo.courseId-expand-symbols`,
     );
     fireEvent.click(expandRow);
-    const addButton = screen.getByTestId(
-      `${testId}-cell-row-2-col-add`,
-    );
+    const addButton = screen.getByTestId(`${testId}-cell-row-2-col-add`);
     expect(addButton).toBeInTheDocument();
-    const addButton3 = screen.getByTestId(
-      `${testId}-cell-row-0-col-add`,
-    );
+    const addButton3 = screen.getByTestId(`${testId}-cell-row-0-col-add`);
     expect(addButton3).toBeInTheDocument();
-    const addButton2 = screen.getByTestId(
-      `${testId}-cell-row-1-col-add`,
-    );
+    const addButton2 = screen.getByTestId(`${testId}-cell-row-1-col-add`);
     expect(addButton2).toBeEmpty();
   });
 
@@ -169,8 +161,7 @@ describe("Section tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <SectionsTable sections={fiveSections} 
-          currentUser={currentUser}/>
+          <SectionsTable sections={fiveSections} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -179,15 +170,11 @@ describe("Section tests", () => {
       `${testId}-cell-row-1-col-courseInfo.courseId-expand-symbols`,
     );
     fireEvent.click(expandRow);
-    const addButton = screen.getByTestId(
-      `add-button-12583`,
-    );
+    const addButton = screen.getByTestId(`add-button-12583`);
     fireEvent.click(addButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith(
-        "/courses/create/12583",
-      ),
+      expect(mockedNavigate).toHaveBeenCalledWith("/courses/create/12583"),
     );
   });
 

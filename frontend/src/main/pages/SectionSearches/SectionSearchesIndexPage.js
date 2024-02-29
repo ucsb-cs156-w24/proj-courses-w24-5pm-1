@@ -39,7 +39,7 @@ export default function SectionSearchesIndexPage() {
       <div className="pt-2">
         <h5>Welcome to the UCSB Courses Search App!</h5>
         <BasicCourseSearchForm fetchJSON={fetchBasicSectionJSON} />
-        <SectionsTable sections={sectionJSON} currentUser={currentUser}/>
+        <SectionsTable sections={sectionJSON} currentUser={currentUser} />
       </div>
     </BasicLayout>
   );

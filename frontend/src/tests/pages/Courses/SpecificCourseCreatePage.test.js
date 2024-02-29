@@ -86,7 +86,7 @@ describe("SpecificCoursesCreatePage tests", () => {
 
     fireEvent.change(psIdField, { target: { value: 13 } });
     localStorage.setItem("CourseForm-psId", "13");
-    expect(enrollCdField).toHaveAttribute('readOnly');
+    expect(enrollCdField).toHaveAttribute("readOnly");
     fireEvent.change(enrollCdField, { target: { value: "08250" } });
     expect(submitButton).toBeInTheDocument();
 
