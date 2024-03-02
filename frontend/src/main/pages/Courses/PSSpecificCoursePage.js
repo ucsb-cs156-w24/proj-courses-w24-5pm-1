@@ -48,10 +48,12 @@ export default function SpecificCoursesCreatePage() {
         <div className="pt-2">
           <h1>Add New Course</h1>
 
-          <CourseForm submitAction={onSubmit} 
+          <CourseForm
+            submitAction={onSubmit}
             buttonLabel="Add"
             codeEditable={false}
-            enrollmentCode={enrollmentcode}/>
+            enrollmentCode={enrollmentcode}
+          />
           <p data-testid="PSCourseCreate-Error">
             Error: {mutation.error.response.data?.message}
           </p>

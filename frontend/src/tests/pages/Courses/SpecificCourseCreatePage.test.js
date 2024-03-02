@@ -135,6 +135,9 @@ describe("SpecificCoursesCreatePage tests", () => {
     await screen.findByTestId("PSCourseCreate-Error");
     const PSError = screen.getByTestId("PSCourseCreate-Error");
     expect(PSError).toBeInTheDocument();
+    expect(screen.getByTestId("CourseForm-enrollCd")).toHaveAttribute(
+      "readOnly",
+    );
   });
 
   test("sets schedule and updates localStorage when schedules are available", async () => {
