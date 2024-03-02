@@ -46,7 +46,7 @@ export default function SpecificCoursesCreatePage() {
     return (
       <BasicLayout>
         <div className="pt-2">
-          <h1>Add New Course</h1>
+          <h1>Add Specific Course</h1>
 
           <CourseForm
             submitAction={onSubmit}
