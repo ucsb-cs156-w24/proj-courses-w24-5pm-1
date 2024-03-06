@@ -43,7 +43,7 @@ export default function CoursesCreatePage() {
   if (mutation.isError) {
     const errorMessage =
       mutation.error.response.data?.message || "Unknown error";
-
+       console.log(mutation);
     if (errorMessage.includes("psId")) {
       return (
         <BasicLayout>
