@@ -35,6 +35,12 @@ export default function CourseDetailsIndexPage() {
         )}
 
         {moreDetails && <CourseDetailsTable details={[moreDetails]} />}
+
+        {moreDetails && moreDetails.description && <h5>Course Description</h5>}
+
+        {moreDetails && moreDetails.description && (
+          <p> {moreDetails.description} </p>
+        )}
       </div>
     </BasicLayout>
   );
