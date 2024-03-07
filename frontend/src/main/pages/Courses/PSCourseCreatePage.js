@@ -3,6 +3,7 @@ import CourseForm from "main/components/Courses/CourseForm";
 import { Navigate } from "react-router-dom";
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
+//import { useState } from "react";
 
 export default function CoursesCreatePage() {
   const objectToAxiosParams = (course) => ({
@@ -28,11 +29,11 @@ export default function CoursesCreatePage() {
   );
 
   const { isSuccess } = mutation;
-
   const onSubmit = async (data) => {
     const psId = {
       psId: localStorage["CourseForm-psId"],
     };
+
     const dataFinal = Object.assign(data, psId);
     mutation.mutate(dataFinal);
   };
@@ -41,52 +42,34 @@ export default function CoursesCreatePage() {
     return <Navigate to="/courses/list" />;
   }
   if (mutation.isError) {
-    const errorMessage =
-      mutation.error.response.data?.message || "Unknown error";
-       console.log(mutation);
-    if (errorMessage.includes("psId")) {
-      return (
-        <BasicLayout>
-          <div className="pt-2">
-            <h1>Create New Course</h1>
+    return (
+      <BasicLayout>
+        <div className="pt-2">
+          <h1>Create New Course</h1>
 
-            <CourseForm submitAction={onSubmit} />
-            <br />
-            <p data-testid="PSCourseCreate-Error">Error: Schedule Required</p>
+          <CourseForm submitAction={onSubmit} />
+          <br />
+          <p data-testid="PSCourseCreate-Error">Error: Schedule Required</p>
 
-            <button
-              style={{
-                backgroundColor: "#34859b",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-              }}
-              onClick={() =>
-                (window.location.href = "/personalschedules/create")
-              }
-            >
-              Create Schedule
-            </button>
-          </div>
-        </BasicLayout>
-      );
-    } else {
-      return (
-        <BasicLayout>
-          <div className="pt-2">
-            <h1>Create New Course</h1>
-
-            <CourseForm submitAction={onSubmit} />
-            <p data-testid="PSCourseCreate-Error">Error: {errorMessage}</p>
-          </div>
-        </BasicLayout>
-      );
-    }
+          <button
+            style={{
+              backgroundColor: "#34859b",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+            onClick={() => (window.location.href = "/personalschedules/create")}
+          >
+            Create Schedule
+          </button>
+        </div>
+      </BasicLayout>
+    );
   }
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Create New Course</h1>
+        <h1 data-testid="PSCourseCreate-Success">Create New Course</h1>
 
         <CourseForm submitAction={onSubmit} />
       </div>
