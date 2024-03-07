@@ -3,11 +3,8 @@ import CourseForm from "main/components/Courses/CourseForm";
 import { Navigate } from "react-router-dom";
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
-//import { useState } from "react";
 
 export default function CoursesCreatePage() {
-  //const [missingpsID, setMissingpsID] = useState(true)
-
   const objectToAxiosParams = (course) => ({
     url: "/api/courses/post",
     method: "POST",
@@ -36,8 +33,6 @@ export default function CoursesCreatePage() {
       psId: localStorage["CourseForm-psId"],
     };
 
-    //setMissingpsID(data.psId != undefined); //this varibale doesn't seem to be set in tests
-
     const dataFinal = Object.assign(data, psId);
     mutation.mutate(dataFinal);
   };
@@ -48,8 +43,8 @@ export default function CoursesCreatePage() {
   if (mutation.isError) {
     const errorMessage =
       mutation.error.response.data?.message || "Unkown Error";
-    console.log(mutation);
-    if (errorMessage.includes("psId")) {
+
+    if (mutation.error.response.status === 400) {
       return (
         <BasicLayout>
           <div className="pt-2">
