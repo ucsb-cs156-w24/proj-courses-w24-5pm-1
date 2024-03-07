@@ -257,7 +257,7 @@ describe("CoursesCreatePage tests", () => {
 
   test("displays error message when backend request fails", async () => {
     // Mocking the backend response to simulate an error
-    axiosMock.onPost("/api/courses/post").reply(400, {
+    axiosMock.onPost("/api/courses/post").reply(404, {
       message: null, // Simulating no specific error message
     });
 
