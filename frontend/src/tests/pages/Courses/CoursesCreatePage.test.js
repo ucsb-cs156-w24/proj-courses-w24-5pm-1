@@ -284,7 +284,7 @@ describe("CoursesCreatePage tests", () => {
     // Ensure error message is displayed
     await waitFor(() => {
       expect(screen.getByTestId("PSCourseCreate-Error")).toHaveTextContent(
-        "Error: Unkown Error", // Adjusted expectation
+        "Error: Unknown Error", // Adjusted expectation
       );
     });
   });
