@@ -163,50 +163,7 @@ describe("CoursesCreatePage tests", () => {
     expect(localStorage.getItem("CourseForm-psId")).toBe("17");
   });
 
-  // test("displays error message and button for creating schedule when psId is not provided", async () => {
-  //   // Mocking the backend response to simulate an error
-  //   axiosMock.onPost("/api/courses/post").reply(400, {
-  //     message:
-  //       "Required request parameter 'psId' for method parameter type Long is not present",
-  //   });
-
-  //   // Mocking window.location.href
-  //   delete window.location;
-  //   window.location = { href: "" };
-
-  //   render(
-  //     <QueryClientProvider client={new QueryClient()}>
-  //       <MemoryRouter>
-  //         <CoursesCreatePage />
-  //       </MemoryRouter>
-  //     </QueryClientProvider>,
-  //   );
-
-  //   // Fill in the form fields and submit
-  //   const enrollCdField = screen.getByTestId("CourseForm-enrollCd");
-  //   const submitButton = screen.getByTestId("CourseForm-submit");
-
-  //   fireEvent.change(enrollCdField, { target: { value: "08250" } });
-  //   fireEvent.click(submitButton);
-
-  //   // Ensure error message is displayed
-  //   await waitFor(() => {
-  //     expect(screen.getByTestId("PSCourseCreate-Error")).toHaveTextContent(
-  //       "Error: Schedule Required",
-  //     );
-  //   });
-
-  //   // Ensure button for creating schedule is displayed
-  //   expect(screen.getByText("Create Schedule")).toBeInTheDocument();
-
-  //   // Click the button for creating schedule
-  //   const createScheduleButton = screen.getByText("Create Schedule");
-  //   fireEvent.click(createScheduleButton);
-
-  //   // Expect window.location.href to be updated
-  //   expect(window.location.href).toBe("/personalschedules/create");
-  // });
-  test("displays error message and button for creating schedule when psId is not provided", async () => {
+  test("displays error message and button for creating schedule when psId is not provided with backend error", async () => {
     // Mocking the backend response to simulate an error
     axiosMock.onPost("/api/courses/post").reply(400, {
       message:
@@ -226,9 +183,12 @@ describe("CoursesCreatePage tests", () => {
     );
 
     // Fill in the form fields and submit
+
+    const psIdField = document.querySelector("#CourseForm-psId");
     const enrollCdField = screen.getByTestId("CourseForm-enrollCd");
     const submitButton = screen.getByTestId("CourseForm-submit");
 
+    fireEvent.change(psIdField, { target: { value: undefined } });
     fireEvent.change(enrollCdField, { target: { value: "08250" } });
     fireEvent.click(submitButton);
 
@@ -262,9 +222,9 @@ describe("CoursesCreatePage tests", () => {
     });
   });
 
-  test("displays error message and button for creating schedule when backend returns 400 without specific error message", async () => {
-    // Mocking the backend response to simulate an error without a specific error message
-    axiosMock.onPost("/api/courses/post").reply(400);
+  test("Succes message when there is no error", async () => {
+    //Mocking the backend response to simulate an success
+    axiosMock.onPost("/api/courses/post").reply(200, {});
 
     // Mocking window.location.href
     delete window.location;
@@ -279,48 +239,20 @@ describe("CoursesCreatePage tests", () => {
     );
 
     // Fill in the form fields and submit
+
+    const psIdField = document.querySelector("#CourseForm-psId");
     const enrollCdField = screen.getByTestId("CourseForm-enrollCd");
     const submitButton = screen.getByTestId("CourseForm-submit");
 
+    fireEvent.change(psIdField, { target: { value: "13" } });
     fireEvent.change(enrollCdField, { target: { value: "08250" } });
     fireEvent.click(submitButton);
 
     // Ensure error message is displayed
     await waitFor(() => {
-      expect(screen.getByTestId("PSCourseCreate-Error")).toHaveTextContent(
-        "Error: Unknown error",
+      expect(screen.getByTestId("PSCourseCreate-Success")).toHaveTextContent(
+        "Create New Course",
       );
     });
   });
-
-  // test("displays error message and button for creating schedule when backend returns 400 without specific error message", async () => {
-  //   // Mocking the backend response to simulate a generic error
-  //   axiosMock.onPost("/api/courses/post").reply(400);
-
-  //   render(
-  //     <QueryClientProvider client={new QueryClient()}>
-  //       <MemoryRouter>
-  //         <CoursesCreatePage />
-  //       </MemoryRouter>
-  //     </QueryClientProvider>,
-  //   );
-
-  //   // Fill in the form fields and submit
-  //   const psIdField = document.querySelector("#CourseForm-psId");
-  //   const enrollCdField = screen.getByTestId("CourseForm-enrollCd");
-  //   const submitButton = screen.getByTestId("CourseForm-submit");
-  //   fireEvent.change(psIdField, { target: { value: 13 } });
-  //   fireEvent.change(enrollCdField, { target: { value: "08250" } });
-  //   fireEvent.click(submitButton);
-
-  //   // Ensure error message is displayed
-  //   await waitFor(() => {
-  //     expect(screen.getByTestId("PSCourseCreate-Error")).toHaveTextContent(
-  //       "Error:",
-  //     );
-  //   });
-
-  //   // Ensure button for creating schedule is displayed
-  //   // expect(screen.getByText('Create Schedule')).toBeInTheDocument();
-  // });
 });
