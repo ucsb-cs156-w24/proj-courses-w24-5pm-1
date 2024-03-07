@@ -42,7 +42,7 @@ export default function CoursesCreatePage() {
   }
   if (mutation.isError) {
     const errorMessage =
-      mutation.error.response.data?.message || "Unkown Error";
+      mutation.error.response.data?.message || "Unknown Error";
 
     if (mutation.error.response.status === 400) {
       return (
