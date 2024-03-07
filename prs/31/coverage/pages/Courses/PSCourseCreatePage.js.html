@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -141,24 +141,8 @@
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -188,9 +172,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -201,12 +185,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,19 +202,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,6 +224,7 @@ import CourseForm from "main/components/Courses/CourseForm";
 import { Navigate } from "react-router-dom";
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
+//import { useState } from "react";
 &nbsp;
 export default function CoursesCreatePage() {
   const objectToAxiosParams = (course) =&gt; ({
@@ -283,11 +250,11 @@ export default function CoursesCreatePage() {
   );
 &nbsp;
   const { isSuccess } = mutation;
-&nbsp;
   const onSubmit = async (data) =&gt; {
     const psId = {
       psId: localStorage["CourseForm-psId"],
     };
+&nbsp;
     const dataFinal = Object.assign(data, psId);
     mutation.mutate(dataFinal);
   };
@@ -296,52 +263,34 @@ export default function CoursesCreatePage() {
     return &lt;Navigate to="/courses/list" /&gt;;
   }
   if (mutation.isError) {
-    const errorMessage =
-      mutation.error.response.data?.message || "Unknown error";
-       console.log(mutation);
-    if (errorMessage.includes("psId")) {
-      return (
-        &lt;BasicLayout&gt;
-          &lt;div className="pt-2"&gt;
-            &lt;h1&gt;Create New Course&lt;/h1&gt;
+    return (
+      &lt;BasicLayout&gt;
+        &lt;div className="pt-2"&gt;
+          &lt;h1&gt;Create New Course&lt;/h1&gt;
 &nbsp;
-            &lt;CourseForm submitAction={onSubmit} /&gt;
-            &lt;br /&gt;
-            &lt;p data-testid="PSCourseCreate-Error"&gt;Error: Schedule Required&lt;/p&gt;
+          &lt;CourseForm submitAction={onSubmit} /&gt;
+          &lt;br /&gt;
+          &lt;p data-testid="PSCourseCreate-Error"&gt;Error: Schedule Required&lt;/p&gt;
 &nbsp;
-            &lt;button
-              style={{
-                backgroundColor: "#34859b",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-              }}
-              onClick={() =&gt;
-                (window.location.href = "/personalschedules/create")
-              }
-            &gt;
-              Create Schedule
-            &lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/BasicLayout&gt;
-      );
-    } else {
-      return (
-        &lt;BasicLayout&gt;
-          &lt;div className="pt-2"&gt;
-            &lt;h1&gt;Create New Course&lt;/h1&gt;
-&nbsp;
-            &lt;CourseForm submitAction={onSubmit} /&gt;
-            &lt;p data-testid="PSCourseCreate-Error"&gt;Error: {errorMessage}&lt;/p&gt;
-          &lt;/div&gt;
-        &lt;/BasicLayout&gt;
-      );
-    }
+          &lt;button
+            style={{
+              backgroundColor: "#34859b",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+            onClick={() =&gt; (window.location.href = "/personalschedules/create")}
+          &gt;
+            Create Schedule
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/BasicLayout&gt;
+    );
   }
   return (
     &lt;BasicLayout&gt;
       &lt;div className="pt-2"&gt;
-        &lt;h1&gt;Create New Course&lt;/h1&gt;
+        &lt;h1 data-testid="PSCourseCreate-Success"&gt;Create New Course&lt;/h1&gt;
 &nbsp;
         &lt;CourseForm submitAction={onSubmit} /&gt;
       &lt;/div&gt;
@@ -355,7 +304,7 @@ export default function CoursesCreatePage() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Mar 06 2024 17:05:30 GMT-0800 (Pacific Standard Time)
+                at Wed Mar 06 2024 17:05:56 GMT-0800 (Pacific Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
