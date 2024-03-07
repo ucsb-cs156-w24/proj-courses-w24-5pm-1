@@ -166,8 +166,7 @@ describe("CoursesCreatePage tests", () => {
   test("displays error message and button for creating schedule when psId is not provided with backend error", async () => {
     // Mocking the backend response to simulate an error
     axiosMock.onPost("/api/courses/post").reply(400, {
-      message:
-        "Required request parameter 'psId' for method parameter type Long is not present",
+      message: "'psId' for method parameter type Long is not present",
     });
 
     // Mocking window.location.href
@@ -252,6 +251,40 @@ describe("CoursesCreatePage tests", () => {
     await waitFor(() => {
       expect(screen.getByTestId("PSCourseCreate-Success")).toHaveTextContent(
         "Create New Course",
+      );
+    });
+  });
+
+  test("displays error message when backend request fails", async () => {
+    // Mocking the backend response to simulate an error
+    axiosMock.onPost("/api/courses/post").reply(400, {
+      message: null, // Simulating no specific error message
+    });
+
+    render(
+      <QueryClientProvider client={new QueryClient()}>
+        <MemoryRouter>
+          <CoursesCreatePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    // Fill in the form fields and submit
+    const psIdField = document.querySelector("#CourseForm-psId");
+    const enrollCdField = screen.getByTestId("CourseForm-enrollCd");
+    const submitButton = screen.getByTestId("CourseForm-submit");
+
+    // Ensure that psIdField is set
+    fireEvent.change(psIdField, { target: { value: "13" } });
+
+    // Ensure that enrollCdField is set
+    fireEvent.change(enrollCdField, { target: { value: "08250" } });
+    fireEvent.click(submitButton);
+
+    // Ensure error message is displayed
+    await waitFor(() => {
+      expect(screen.getByTestId("PSCourseCreate-Error")).toHaveTextContent(
+        "Error: Unkown Error", // Adjusted expectation
       );
     });
   });
