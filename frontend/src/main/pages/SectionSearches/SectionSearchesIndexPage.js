@@ -4,8 +4,10 @@ import BasicCourseSearchForm from "main/components/BasicCourseSearch/BasicCourse
 import _BasicCourseTable from "main/components/Courses/BasicCourseTable";
 import { useBackendMutation } from "main/utils/useBackend";
 import SectionsTable from "main/components/Sections/SectionsTable";
+import { useCurrentUser } from "main/utils/currentUser";
 
 export default function SectionSearchesIndexPage() {
+  const currentUser = useCurrentUser();
   // Stryker disable next-line all : Can't test state because hook is internal
   const [sectionJSON, setSectionJSON] = useState([]);
 
@@ -37,7 +39,7 @@ export default function SectionSearchesIndexPage() {
       <div className="pt-2">
         <h5>Welcome to the UCSB Courses Search App!</h5>
         <BasicCourseSearchForm fetchJSON={fetchBasicSectionJSON} />
-        <SectionsTable sections={sectionJSON} />
+        <SectionsTable sections={sectionJSON} currentUser={currentUser} />
       </div>
     </BasicLayout>
   );
