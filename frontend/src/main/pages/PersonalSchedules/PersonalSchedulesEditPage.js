@@ -9,37 +9,37 @@ export default function PersonalSchedulesEditPage() {
   let { id } = useParams();
   const currentUser = useCurrentUser();
 
-  var {
-    data: personalSchedules,
-  } = useBackend(
+  var { data: personalSchedules } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/personalSections/all?psId=" + id],
-    { method: 'GET', url: '/api/personalSections/all?psId=' + id },
+    { method: "GET", url: "/api/personalSections/all?psId=" + id },
     [],
   );
 
   const {
     data: scheduleData,
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/courses/user/psid/all?psId=" + id],
-    { method: 'GET', url: '/api/courses/user/psid/all?psId=' + id },
+    { method: "GET", url: "/api/courses/user/psid/all?psId=" + id },
     [],
   );
 
-    const updatedPersonalSchedules = personalSchedules.map(schedule => {
-      const matchingSchedule = scheduleData.find(data => data.enrollCd === schedule.classSections[0].enrollCode);
-      if (matchingSchedule) {
-        return {
-          ...schedule,
-          id: matchingSchedule.id
-        };
-      }
-      return schedule;
-    });
+  const updatedPersonalSchedules = personalSchedules.map((schedule) => {
+    const matchingSchedule = scheduleData.find(
+      (data) => data.enrollCd === schedule.classSections[0].enrollCode,
+    );
+    if (matchingSchedule) {
+      return {
+        ...schedule,
+        id: matchingSchedule.id,
+      };
+    }
+    return schedule;
+  });
 
-    personalSchedules = updatedPersonalSchedules;
+  personalSchedules = updatedPersonalSchedules;
   return (
     <BasicLayout>
       <div className="pt-2">

@@ -29,9 +29,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <PersonalSchedulesTableEdit
-            personalSchedules={[]}
-          />
+          <PersonalSchedulesTableEdit personalSchedules={[]} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -43,9 +41,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <PersonalSchedulesTableEdit
-            personalSchedules={[]}
-          />
+          <PersonalSchedulesTableEdit personalSchedules={[]} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -57,16 +53,13 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <PersonalSchedulesTableEdit
-            personalSchedules={[]}
-          />
+          <PersonalSchedulesTableEdit personalSchedules={[]} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
   });
 
   test("Has the expected column headers and content", async () => {
-    
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -77,11 +70,7 @@ describe("UserTable tests", () => {
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = [
-      "ID",
-      "Course Id",
-      "Course Name",
-    ];
+    const expectedHeaders = ["ID", "Course Id", "Course Name"];
     const testId = "PSCourseEditTable";
     //const columnHeader = screen.getByTestId('PSCourseEditTable-header-Delete');
     expectedHeaders.forEach((headerText) => {
@@ -90,26 +79,26 @@ describe("UserTable tests", () => {
     });
     //expect(columnHeader).getByText("Delete");
 
-    expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-id`),
-    ).toHaveTextContent("72");
-    expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-id`),
-    ).toHaveTextContent("75");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "72",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "75",
+    );
 
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-courseId`),
+      screen.getByTestId(`${testId}-cell-row-0-col-courseId`),
     ).toHaveTextContent("WRIT 1");
     expect(
-          screen.getByTestId(`${testId}-cell-row-1-col-courseId`),
+      screen.getByTestId(`${testId}-cell-row-1-col-courseId`),
     ).toHaveTextContent("SOC 91");
 
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
-  ).toHaveTextContent("APP TO UNIV WRIT");
-  expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-title`),
-  ).toHaveTextContent("GROUP EXP LEARNING");
+    ).toHaveTextContent("APP TO UNIV WRIT");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-title`),
+    ).toHaveTextContent("GROUP EXP LEARNING");
 
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-Delete`),
@@ -117,6 +106,5 @@ describe("UserTable tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-Delete`),
     ).toHaveTextContent("Delete");
-
   });
 });

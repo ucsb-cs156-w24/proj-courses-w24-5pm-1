@@ -51,9 +51,11 @@ describe("PSCourseEditPage tests", () => {
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
     axiosMock
-      .onGet("/api/courses/user/psid/all?psId=1", { params: { psId: 1 } }).reply(200, inputEditFixtures.psIdCall);
+      .onGet("/api/courses/user/psid/all?psId=1", { params: { psId: 1 } })
+      .reply(200, inputEditFixtures.psIdCall);
     axiosMock
-      .onGet("/api/personalSections/all", { params: { id: 1 } }).reply(200, inputEditFixtures.sectionCall);
+      .onGet("/api/personalSections/all", { params: { id: 1 } })
+      .reply(200, inputEditFixtures.sectionCall);
   };
 
   const setupAdminUser = () => {
@@ -66,9 +68,11 @@ describe("PSCourseEditPage tests", () => {
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
     axiosMock
-      .onGet("/api/courses/user/psid/all?psId=1", { params: { psId: 1 } }).reply(200, inputEditFixtures.psIdCall);
+      .onGet("/api/courses/user/psid/all?psId=1", { params: { psId: 1 } })
+      .reply(200, inputEditFixtures.psIdCall);
     axiosMock
-      .onGet("/api/personalSections/all", { params: { id: 1 } }).reply(200, inputEditFixtures.sectionCall);
+      .onGet("/api/personalSections/all", { params: { id: 1 } })
+      .reply(200, inputEditFixtures.sectionCall);
   };
 
   test("renders without crashing for regular user", () => {
@@ -103,8 +107,12 @@ describe("PSCourseEditPage tests", () => {
     setupUserOnly();
     const queryClient = new QueryClient();
 
-      axiosMock.onGet("/api/personalSections/all?psId=1").reply(200, inputEditFixtures.sectionCall);
-      axiosMock.onGet("/api/courses/user/psid/all?psId=1").reply(200, inputEditFixtures.psIdCall);
+    axiosMock
+      .onGet("/api/personalSections/all?psId=1")
+      .reply(200, inputEditFixtures.sectionCall);
+    axiosMock
+      .onGet("/api/courses/user/psid/all?psId=1")
+      .reply(200, inputEditFixtures.psIdCall);
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -123,14 +131,14 @@ describe("PSCourseEditPage tests", () => {
       screen.getByTestId(`${testId}-cell-row-0-col-courseId`),
     ).toHaveTextContent("WRIT 1");
     expect(
-          screen.getByTestId(`${testId}-cell-row-1-col-courseId`),
+      screen.getByTestId(`${testId}-cell-row-1-col-courseId`),
     ).toHaveTextContent("SOC 91");
 
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
     ).toHaveTextContent("APP TO UNIV WRIT");
     expect(
-          screen.getByTestId(`${testId}-cell-row-1-col-title`),
+      screen.getByTestId(`${testId}-cell-row-1-col-title`),
     ).toHaveTextContent("GROUP EXP LEARNING");
 
     expect(
@@ -139,15 +147,18 @@ describe("PSCourseEditPage tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-Delete`),
     ).toHaveTextContent("Delete");
-
   });
 
   test("renders two PSCourses without crashing for admin user", async () => {
     setupAdminUser();
     const queryClient = new QueryClient();
 
-    axiosMock.onGet("/api/personalSections/all?psId=1").reply(200, inputEditFixtures.sectionCall);
-    axiosMock.onGet("/api/courses/user/psid/all?psId=1").reply(200, inputEditFixtures.psIdCall);
+    axiosMock
+      .onGet("/api/personalSections/all?psId=1")
+      .reply(200, inputEditFixtures.sectionCall);
+    axiosMock
+      .onGet("/api/courses/user/psid/all?psId=1")
+      .reply(200, inputEditFixtures.psIdCall);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -167,14 +178,14 @@ describe("PSCourseEditPage tests", () => {
       screen.getByTestId(`${testId}-cell-row-0-col-courseId`),
     ).toHaveTextContent("WRIT 1");
     expect(
-          screen.getByTestId(`${testId}-cell-row-1-col-courseId`),
+      screen.getByTestId(`${testId}-cell-row-1-col-courseId`),
     ).toHaveTextContent("SOC 91");
 
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-title`),
     ).toHaveTextContent("APP TO UNIV WRIT");
     expect(
-          screen.getByTestId(`${testId}-cell-row-1-col-title`),
+      screen.getByTestId(`${testId}-cell-row-1-col-title`),
     ).toHaveTextContent("GROUP EXP LEARNING");
 
     expect(
@@ -183,7 +194,6 @@ describe("PSCourseEditPage tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-Delete`),
     ).toHaveTextContent("Delete");
-
   });
 
   test("renders empty table when backend unavailable, user only for sections call", async () => {
@@ -191,7 +201,9 @@ describe("PSCourseEditPage tests", () => {
 
     const queryClient = new QueryClient();
     axiosMock.onGet("/api/personalSections/all?psId=1").timeout();
-    axiosMock.onGet("/api/courses/user/psid/all?psId=1").reply(200, inputEditFixtures.psIdCall);
+    axiosMock
+      .onGet("/api/courses/user/psid/all?psId=1")
+      .reply(200, inputEditFixtures.psIdCall);
     const restoreConsole = mockConsole();
 
     render(
@@ -221,7 +233,9 @@ describe("PSCourseEditPage tests", () => {
     setupUserOnly();
 
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/personalSections/all?psId=1").reply(200, inputEditFixtures.psIdCall);
+    axiosMock
+      .onGet("/api/personalSections/all?psId=1")
+      .reply(200, inputEditFixtures.psIdCall);
     axiosMock.onGet("/api/courses/user/psid/all?psId=1").timeout();
     const restoreConsole = mockConsole();
 
@@ -252,8 +266,12 @@ describe("PSCourseEditPage tests", () => {
   test("what happens when you click delete, admin", async () => {
     setupAdminUser();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/personalSections/all?psId=1").reply(200, inputEditFixtures.sectionCall);
-    axiosMock.onGet("/api/courses/user/psid/all?psId=1").reply(200, inputEditFixtures.psIdCall);
+    axiosMock
+      .onGet("/api/personalSections/all?psId=1")
+      .reply(200, inputEditFixtures.sectionCall);
+    axiosMock
+      .onGet("/api/courses/user/psid/all?psId=1")
+      .reply(200, inputEditFixtures.psIdCall);
     axiosMock
       .onDelete("/api/courses/user")
       .reply(200, "PSCourse with id 72 was deleted");
@@ -280,9 +298,7 @@ describe("PSCourseEditPage tests", () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith(
-        "PSCourse with id 72 was deleted",
-      );
+      expect(mockToast).toBeCalledWith("PSCourse with id 72 was deleted");
     });
   });
 
@@ -291,7 +307,7 @@ describe("PSCourseEditPage tests", () => {
   //   const queryClient = new QueryClient();
   //   axiosMock.onGet("/api/personalSections/all?psId=1").reply(200, undefined);
   //   axiosMock.onGet("/api/courses/user/psid/all?psId=1").reply(200, []);
-  
+
   //   render(
   //     <QueryClientProvider client={queryClient}>
   //       <MemoryRouter>
@@ -299,7 +315,7 @@ describe("PSCourseEditPage tests", () => {
   //       </MemoryRouter>
   //     </QueryClientProvider>,
   //   );
-  
+
   //   // Assert the updated id is displayed
   //   // This assumes your component somehow reflects the updated id (e.g., in the text content of an element)
   //   // Adjust the assertion based on how your application uses the updated data
