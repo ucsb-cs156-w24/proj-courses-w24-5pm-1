@@ -28,11 +28,11 @@ export default function CoursesCreatePage() {
   );
 
   const { isSuccess } = mutation;
-
   const onSubmit = async (data) => {
     const psId = {
       psId: localStorage["CourseForm-psId"],
     };
+
     const dataFinal = Object.assign(data, psId);
     mutation.mutate(dataFinal);
   };
@@ -41,23 +41,52 @@ export default function CoursesCreatePage() {
     return <Navigate to="/courses/list" />;
   }
   if (mutation.isError) {
-    return (
-      <BasicLayout>
-        <div className="pt-2">
-          <h1>Create New Course</h1>
+    const errorMessage =
+      mutation.error.response.data?.message || "Unknown Error";
 
-          <CourseForm submitAction={onSubmit} />
-          <p data-testid="PSCourseCreate-Error">
-            Error: {mutation.error.response.data?.message}
-          </p>
-        </div>
-      </BasicLayout>
-    );
+    if (mutation.error.response.status === 400) {
+      return (
+        <BasicLayout>
+          <div className="pt-2">
+            <h1>Create New Course</h1>
+
+            <CourseForm submitAction={onSubmit} />
+            <br />
+            <p data-testid="PSCourseCreate-Error">Error: Schedule Required</p>
+
+            <button
+              style={{
+                backgroundColor: "#34859b",
+                color: "white",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
+              onClick={() =>
+                (window.location.href = "/personalschedules/create")
+              }
+            >
+              Create Schedule
+            </button>
+          </div>
+        </BasicLayout>
+      );
+    } else {
+      return (
+        <BasicLayout>
+          <div className="pt-2">
+            <h1>Create New Course</h1>
+
+            <CourseForm submitAction={onSubmit} />
+            <p data-testid="PSCourseCreate-Error">Error: {errorMessage}</p>
+          </div>
+        </BasicLayout>
+      );
+    }
   }
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Create New Course</h1>
+        <h1 data-testid="PSCourseCreate-Success">Create New Course</h1>
 
         <CourseForm submitAction={onSubmit} />
       </div>
