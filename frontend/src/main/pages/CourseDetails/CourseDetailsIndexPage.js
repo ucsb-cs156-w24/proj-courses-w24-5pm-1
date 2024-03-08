@@ -30,11 +30,17 @@ export default function CourseDetailsIndexPage() {
       <div className="pt-2">
         {moreDetails && moreDetails.courseId && (
           <h5>
-            Course Details for {moreDetails.courseId} {yyyyqToQyy(qtr)}!
+            Course Details for {moreDetails.courseId} {yyyyqToQyy(qtr)}
           </h5>
         )}
 
         {moreDetails && <CourseDetailsTable details={[moreDetails]} />}
+
+        {moreDetails && moreDetails.description && <h5>Course Description</h5>}
+
+        {moreDetails && moreDetails.description && (
+          <p> {moreDetails.description} </p>
+        )}
       </div>
     </BasicLayout>
   );

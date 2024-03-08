@@ -10,13 +10,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import edu.ucsb.cs156.courses.ControllerTestCase;
+import edu.ucsb.cs156.courses.entities.PSCourse;
 import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
+import edu.ucsb.cs156.courses.repositories.PSCourseRepository;
 import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
 import edu.ucsb.cs156.courses.repositories.UserRepository;
 import edu.ucsb.cs156.courses.testconfig.TestConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -34,6 +37,7 @@ import org.springframework.test.web.servlet.MvcResult;
 public class PersonalSchedulesControllerTests extends ControllerTestCase {
 
   @MockBean PersonalScheduleRepository personalscheduleRepository;
+  @MockBean PSCourseRepository psCourseRepository;
 
   @MockBean UserRepository userRepository;
 
@@ -854,5 +858,40 @@ public class PersonalSchedulesControllerTests extends ControllerTestCase {
     Map<String, Object> json = responseToJson(response);
     assertEquals(
         "A personal schedule with that name already exists in that quarter", json.get("message"));
+  }
+
+  @WithMockUser(roles = {"USER"}) // Adjust based on actual security requirements
+  @Test
+  public void deleting_removes_associated_courses() throws Exception {
+    // arrange
+    User u = currentUserService.getCurrentUser().getUser();
+    PersonalSchedule ps1 =
+        PersonalSchedule.builder()
+            .name("Name 1")
+            .description("Description 1")
+            .quarter("20221")
+            .user(u)
+            .id(15L)
+            .build();
+
+    List<PSCourse> associatedCourses =
+        List.of(
+            new PSCourse(/* initialization */ ),
+            new PSCourse(
+                /* initialization */ )); // Mock returning these courses when findAllByPsId is
+    // called
+
+    when(personalscheduleRepository.findByIdAndUser(eq(15L), eq(u))).thenReturn(Optional.of(ps1));
+    when(psCourseRepository.findAllByPsId(eq(15L))).thenReturn(associatedCourses);
+
+    // act
+    mockMvc.perform(delete("/api/personalschedules?id=15").with(csrf())).andExpect(status().isOk());
+
+    // assert
+    verify(personalscheduleRepository, times(1)).findByIdAndUser(15L, u);
+    // Assuming each PSCourse should be deleted exactly once
+    associatedCourses.forEach(psCourse -> verify(psCourseRepository, times(2)).delete(psCourse));
+
+    verify(personalscheduleRepository, times(1)).delete(ps1);
   }
 }

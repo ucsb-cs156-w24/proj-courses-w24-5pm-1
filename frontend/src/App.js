@@ -20,6 +20,7 @@ import SectionSearchesIndexPage from "main/pages/SectionSearches/SectionSearches
 
 import CoursesIndexPage from "main/pages/Courses/PSCourseIndexPage";
 import CoursesCreatePage from "main/pages/Courses/PSCourseCreatePage";
+import SpecificCoursesCreatePage from "main/pages/Courses/PSSpecificCoursePage";
 
 import CourseOverTimeIndexPage from "main/pages/CourseOverTime/CourseOverTimeIndexPage";
 import CourseOverTimeInstructorIndexPage from "main/pages/CourseOverTime/CourseOverTimeInstructorIndexPage";
@@ -80,6 +81,11 @@ function App() {
               exact
               path="/personalschedules/details/:id"
               element={<PersonalSchedulesDetailsPage />}
+            />
+            <Route
+              exact
+              path="/courses/create/:enrollmentcode"
+              element={<SpecificCoursesCreatePage />}
             />
           </>
         )}
