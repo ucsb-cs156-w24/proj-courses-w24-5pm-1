@@ -45,11 +45,9 @@ export default function CourseTable({ courses, currentUser }) {
     },
     {
       Header: "Quarter",
-      accessor: "course.quarter",
-      Cell: ({ value }) => yyyyqToQyy(value), 
+      accessor: (row) => yyyyqToQyy(row.course.quarter),
     },
   ];
-
   const columnsIfUser = [
     ...columns,
     // ButtonColumn("Edit", "primary", editCallback, "PersonalSchedulesTable"),

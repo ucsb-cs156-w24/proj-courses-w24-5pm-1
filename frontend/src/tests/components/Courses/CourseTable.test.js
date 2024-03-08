@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import CourseTable from "main/components/Courses/CourseTable";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
-import { coursesFixtures } from "fixtures/pscourseFixtures";
+import { courseWithScheduleFixtures } from "fixtures/courseWithScheduleFixtures";
 
 const mockedNavigate = jest.fn();
 
@@ -59,22 +59,36 @@ describe("UserTable tests", () => {
     );
   });
 
-  test("Has the expected colum headers and content for Ordinary User", () => {
+  test("Has the expected column headers and content for Ordinary User", () => {
     const currentUser = currentUserFixtures.userOnly;
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <CourseTable
-            courses={coursesFixtures.twoCourses}
+            courses={courseWithScheduleFixtures.threeCourseWithSchedules}
             currentUser={currentUser}
           />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = ["id", "Enrollment Code", "Personal Schedule ID"];
-    const expectedFields = ["id", "enrollCd", "psId"];
+    const expectedHeaders = [
+      "Personal Schedule ID",
+      "Personal Schedule Name",
+      "Enrollment Code",
+      "Course ID",
+      "Course Name",
+      "Quarter",
+    ];
+    const expectedFields = [
+      "personalSchedule.id",
+      "personalSchedule.name",
+      "course.classSections[0].enrollCode",
+      "course.courseId",
+      "course.title",
+      "Quarter",
+    ];
     const testId = "CourseTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -87,11 +101,14 @@ describe("UserTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "25",
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`)).toHaveTextContent(
+      "1",
     );
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "26",
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
+      "2",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-personalSchedule.id`)).toHaveTextContent(
+      "2",
     );
 
     const deleteButton = screen.getByTestId(
@@ -108,15 +125,29 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <CourseTable
-            courses={coursesFixtures.twoCourses}
+            courses={courseWithScheduleFixtures.threeCourseWithSchedules}
             currentUser={currentUser}
           />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = ["id", "Enrollment Code", "Personal Schedule ID"];
-    const expectedFields = ["id", "enrollCd", "psId"];
+    const expectedHeaders = [
+      "Personal Schedule ID",
+      "Personal Schedule Name",
+      "Enrollment Code",
+      "Course ID",
+      "Course Name",
+      "Quarter",
+    ];
+    const expectedFields = [
+      "personalSchedule.id",
+      "personalSchedule.name",
+      "course.classSections[0].enrollCode",
+      "course.courseId",
+      "course.title",
+      "Quarter",
+    ];
     const testId = "CourseTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -129,11 +160,14 @@ describe("UserTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "25",
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`)).toHaveTextContent(
+      "1",
     );
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "26",
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
+      "2",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-personalSchedule.id`)).toHaveTextContent(
+      "2",
     );
 
     const deleteButton = screen.getByTestId(
@@ -150,16 +184,22 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <CourseTable
-            courses={coursesFixtures.twoCourses}
+            courses={courseWithScheduleFixtures.threeCourseWithSchedules}
             currentUser={currentUser}
           />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
-    expect(
-      await screen.findByTestId(`CourseTable-cell-row-0-col-id`),
-    ).toHaveTextContent("25");
+    expect(await screen.findByTestId(`CourseTable-cell-row-0-col-personalSchedule.id`)).toHaveTextContent(
+      "1",
+    );
+    expect(await screen.findByTestId(`CourseTable-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
+      "2",
+    );
+    expect(await screen.findByTestId(`CourseTable-cell-row-2-col-personalSchedule.id`)).toHaveTextContent(
+      "2",
+    );
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,
@@ -178,7 +218,7 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <CourseTable
-            courses={coursesFixtures.twoCourses}
+            courses={courseWithScheduleFixtures.threeCourseWithSchedules}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -186,8 +226,8 @@ describe("UserTable tests", () => {
     );
 
     expect(
-      await screen.findByTestId(`CourseTable-cell-row-0-col-id`),
-    ).toHaveTextContent("25");
+      await screen.findByTestId(`CourseTable-cell-row-0-col-personalSchedule.id`),
+    ).toHaveTextContent("1");
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,
