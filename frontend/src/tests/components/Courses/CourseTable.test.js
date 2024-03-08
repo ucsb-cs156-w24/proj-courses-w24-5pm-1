@@ -101,15 +101,15 @@ describe("UserTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`)).toHaveTextContent(
-      "1",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-2-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,
@@ -160,15 +160,15 @@ describe("UserTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`)).toHaveTextContent(
-      "1",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-2-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,
@@ -191,15 +191,21 @@ describe("UserTable tests", () => {
       </QueryClientProvider>,
     );
 
-    expect(await screen.findByTestId(`CourseTable-cell-row-0-col-personalSchedule.id`)).toHaveTextContent(
-      "1",
-    );
-    expect(await screen.findByTestId(`CourseTable-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
-    expect(await screen.findByTestId(`CourseTable-cell-row-2-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
+    expect(
+      await screen.findByTestId(
+        `CourseTable-cell-row-0-col-personalSchedule.id`,
+      ),
+    ).toHaveTextContent("1");
+    expect(
+      await screen.findByTestId(
+        `CourseTable-cell-row-1-col-personalSchedule.id`,
+      ),
+    ).toHaveTextContent("2");
+    expect(
+      await screen.findByTestId(
+        `CourseTable-cell-row-2-col-personalSchedule.id`,
+      ),
+    ).toHaveTextContent("2");
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,
@@ -226,7 +232,9 @@ describe("UserTable tests", () => {
     );
 
     expect(
-      await screen.findByTestId(`CourseTable-cell-row-0-col-personalSchedule.id`),
+      await screen.findByTestId(
+        `CourseTable-cell-row-0-col-personalSchedule.id`,
+      ),
     ).toHaveTextContent("1");
 
     const deleteButton = screen.getByTestId(

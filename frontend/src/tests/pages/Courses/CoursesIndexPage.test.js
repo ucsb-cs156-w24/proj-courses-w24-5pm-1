@@ -95,9 +95,9 @@ describe("CoursesIndexPage tests", () => {
         screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
       ).toHaveTextContent("1");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
   });
 
   test("renders two courses without crashing for admin user", async () => {
@@ -120,9 +120,9 @@ describe("CoursesIndexPage tests", () => {
         screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
       ).toHaveTextContent("1");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
   });
 
   test("renders empty table when backend unavailable, user only", async () => {
@@ -176,9 +176,9 @@ describe("CoursesIndexPage tests", () => {
     expect(
       await screen.findByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
     ).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`)).toHaveTextContent(
-      "2",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,
