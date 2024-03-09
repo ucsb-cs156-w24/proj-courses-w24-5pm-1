@@ -9,9 +9,12 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ucsb.cs156.courses.ControllerTestCase;
+import edu.ucsb.cs156.courses.documents.Course;
 import edu.ucsb.cs156.courses.documents.SectionFixtures;
-import edu.ucsb.cs156.courses.documents.courseWithScheduleFixtures;
+import edu.ucsb.cs156.courses.documents.PersonalSectionsFixtures;
+import edu.ucsb.cs156.courses.documents.CourseWithScheduleFixtures;
 import edu.ucsb.cs156.courses.entities.PSCourse;
 import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
@@ -32,7 +35,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @WebMvcTest(controllers = {PSCourseDetailsController.class})
 @Import(TestConfig.class)
@@ -42,8 +47,6 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
   @MockBean PersonalScheduleRepository personalscheduleRepository;
 
   @MockBean UserRepository userRepository;
-
-  @MockBean PSCourseRepository coursesRepository;
 
   @MockBean private UCSBCurriculumService ucsbCurriculumService;
 
@@ -77,21 +80,21 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
   public void api_ps_course_details_user_logged_in_returns_existing_course() throws Exception {
     // arrange
     User u = currentUserService.getCurrentUser().getUser();
-    PersonalSchedule ps =
+    PersonalSchedule personalSchedule =
         PersonalSchedule.builder()
-            .name("Name 1")
-            .description("Description 1")
+            .name("Schedule 1")
+            .description("First test schedule")
             .quarter("20221")
             .user(u)
-            .id(13L)
+            .id(1L)
             .build();
-    PSCourse course1 = PSCourse.builder().id(1L).user(u).enrollCd("59501").psId(13L).build();
     Course course = objectMapper.readValue(PersonalSectionsFixtures.ONE_COURSE, Course.class);
-    ArrayList<PSCourse> crs = new ArrayList<PSCourse>();
-    crs.add(course1);
 
-    when(personalscheduleRepository.findByIdAndUser(eq(13L), eq(u))).thenReturn(Optional.of(ps));
-    when((coursesRepository.findAllByPsId(eq(13L)))).thenReturn(crs);
+    CourseWithSchedule courseWithSchedule = new CourseWithSchedule();
+    courseWithSchedule.setPersonalSchedule(personalSchedule);
+    courseWithSchedule.setCourse(course);
+
+    when(personalscheduleRepository.findByIdAndUser(eq(1L), eq(u))).thenReturn(Optional.of(personalSchedule));
     when(ucsbCurriculumService.getJSONbyQtrEnrollCd(eq("20221"), eq("59501")))
         .thenReturn(PersonalSectionsFixtures.ONE_COURSE);
 
@@ -103,9 +106,9 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
             .andReturn();
 
     // assert
-    verify(coursesRepository, times(1)).findAllByPsId(13L);
+    verify(personalscheduleRepository, times(1)).findByIdAndUser(eq(1L), eq(u));
     verify(ucsbCurriculumService, times(1)).getJSONbyQtrEnrollCd("20221", "59501");
-    String expectedJson = mapper.writeValueAsString(course);
+    String expectedJson = mapper.writeValueAsString(courseWithSchedule);
     expectedJson = "[" + expectedJson + "]";
     String responseString = response.getResponse().getContentAsString();
     assertEquals(expectedJson, responseString);
