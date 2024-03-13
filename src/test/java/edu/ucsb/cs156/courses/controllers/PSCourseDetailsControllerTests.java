@@ -18,6 +18,7 @@ import edu.ucsb.cs156.courses.documents.CourseWithScheduleFixtures;
 import edu.ucsb.cs156.courses.entities.PSCourse;
 import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
+import edu.ucsb.cs156.courses.models.CurrentUser;
 import edu.ucsb.cs156.courses.models.CourseWithSchedule;
 import edu.ucsb.cs156.courses.repositories.PSCourseRepository;
 import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -47,6 +50,8 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
   @MockBean PersonalScheduleRepository personalscheduleRepository;
 
   @MockBean UserRepository userRepository;
+
+  @MockBean PSCourseRepository coursesRepository;
 
   @MockBean private UCSBCurriculumService ucsbCurriculumService;
 
@@ -80,6 +85,7 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
   public void api_ps_course_details_user_logged_in_returns_existing_course() throws Exception {
     // arrange
     User u = currentUserService.getCurrentUser().getUser();
+    Long userId = u.getId();
     PersonalSchedule personalSchedule =
         PersonalSchedule.builder()
             .name("Schedule 1")
@@ -90,11 +96,19 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
             .build();
     Course course = objectMapper.readValue(PersonalSectionsFixtures.ONE_COURSE, Course.class);
 
+    PSCourse course1 = PSCourse.builder().id(1L).user(u).enrollCd("59501").psId(1L).build();
+
     CourseWithSchedule courseWithSchedule = new CourseWithSchedule();
     courseWithSchedule.setPersonalSchedule(personalSchedule);
     courseWithSchedule.setCourse(course);
 
-    when(personalscheduleRepository.findByIdAndUser(eq(1L), eq(u))).thenReturn(Optional.of(personalSchedule));
+    ArrayList<PSCourse> crs = new ArrayList<PSCourse>();
+    crs.add(course1);
+
+    Iterable<PersonalSchedule> personalSchedules = Collections.singletonList(personalSchedule);
+
+    when(personalscheduleRepository.findAllByUserId(eq(userId))).thenReturn(personalSchedules);
+    when((coursesRepository.findAllByPsId(eq(1L)))).thenReturn(crs);
     when(ucsbCurriculumService.getJSONbyQtrEnrollCd(eq("20221"), eq("59501")))
         .thenReturn(PersonalSectionsFixtures.ONE_COURSE);
 
@@ -106,7 +120,8 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
             .andReturn();
 
     // assert
-    verify(personalscheduleRepository, times(1)).findByIdAndUser(eq(1L), eq(u));
+    verify(personalscheduleRepository, times(1)).findAllByUserId(eq(u.getId()));
+    verify(coursesRepository, times(1)).findAllByPsId(1L);
     verify(ucsbCurriculumService, times(1)).getJSONbyQtrEnrollCd("20221", "59501");
     String expectedJson = mapper.writeValueAsString(courseWithSchedule);
     expectedJson = "[" + expectedJson + "]";
@@ -114,3 +129,25 @@ public class PSCourseDetailsControllerTests extends ControllerTestCase {
     assertEquals(expectedJson, responseString);
   }
 }
+
+/**
+ * 
+ * User us = getCurrentUser().getUser();
+    PersonalSchedule ps =
+        personalScheduleRepository
+            .findByIdAndUser(psId, us)
+            .orElseThrow(() -> new EntityNotFoundException(PersonalSchedule.class, psId));
+    ArrayList<Course> sections = new ArrayList<Course>();
+    ArrayList<String> jsons = new ArrayList<String>();
+    Iterable<PSCourse> courses = coursesRepository.findAllByPsId(psId);
+    for (PSCourse crs : courses) {
+
+      User u = crs.getUser();
+      String qtr = ps.getQuarter();
+      String responseBody = ucsbCurriculumService.getJSONbyQtrEnrollCd(qtr, crs.getEnrollCd());
+      jsons.add(responseBody);
+      Course course = objectMapper.readValue(responseBody, Course.class);
+      sections.add(course);
+    }
+    return sections;
+ */
