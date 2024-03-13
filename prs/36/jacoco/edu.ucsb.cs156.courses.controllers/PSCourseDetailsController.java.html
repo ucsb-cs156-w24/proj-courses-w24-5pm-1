@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = &quot;PS Course Details&quot;)
 @RequestMapping(&quot;/api/courseDetails&quot;)
 @RestController
-<span class="nc" id="L30">@Slf4j</span>
-<span class="nc" id="L31">public class PSCourseDetailsController extends ApiController {</span>
+<span class="fc" id="L30">@Slf4j</span>
+<span class="fc" id="L31">public class PSCourseDetailsController extends ApiController {</span>
   @Autowired PersonalScheduleRepository personalScheduleRepository;
 
   @Autowired PSCourseRepository coursesRepository;
@@ -42,28 +42,28 @@ import org.springframework.web.bind.annotation.RestController;
   @GetMapping(value = &quot;/all&quot;, produces = &quot;application/json&quot;)
   public ArrayList&lt;CourseWithSchedule&gt; allSections()
       throws JsonProcessingException {
-<span class="nc" id="L45">    CurrentUser currentUser = getCurrentUser();</span>
-<span class="nc" id="L46">    Iterable&lt;PersonalSchedule&gt; personalSchedules =</span>
-<span class="nc" id="L47">        personalScheduleRepository.findAllByUserId(currentUser.getUser().getId());</span>
+<span class="fc" id="L45">    CurrentUser currentUser = getCurrentUser();</span>
+<span class="fc" id="L46">    Iterable&lt;PersonalSchedule&gt; personalSchedules =</span>
+<span class="fc" id="L47">        personalScheduleRepository.findAllByUserId(currentUser.getUser().getId());</span>
 
-<span class="nc" id="L49">    ArrayList&lt;CourseWithSchedule&gt; sections = new ArrayList&lt;CourseWithSchedule&gt;();</span>
-<span class="nc" id="L50">    ArrayList&lt;String&gt; jsons = new ArrayList&lt;String&gt;();</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">    for (PersonalSchedule personalSchedule : personalSchedules){</span>
-<span class="nc" id="L52">      Iterable&lt;PSCourse&gt; courses = coursesRepository.findAllByPsId(personalSchedule.getId());</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">      for (PSCourse crs : courses) {</span>
-<span class="nc" id="L54">        CourseWithSchedule courseWithSchedule = new CourseWithSchedule();</span>
-<span class="nc" id="L55">        courseWithSchedule.setPersonalSchedule(personalSchedule);</span>
+<span class="fc" id="L49">    ArrayList&lt;CourseWithSchedule&gt; sections = new ArrayList&lt;CourseWithSchedule&gt;();</span>
+<span class="fc" id="L50">    ArrayList&lt;String&gt; jsons = new ArrayList&lt;String&gt;();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">    for (PersonalSchedule personalSchedule : personalSchedules){</span>
+<span class="fc" id="L52">      Iterable&lt;PSCourse&gt; courses = coursesRepository.findAllByPsId(personalSchedule.getId());</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">      for (PSCourse crs : courses) {</span>
+<span class="fc" id="L54">        CourseWithSchedule courseWithSchedule = new CourseWithSchedule();</span>
+<span class="fc" id="L55">        courseWithSchedule.setPersonalSchedule(personalSchedule);</span>
 
-<span class="nc" id="L57">        User u = crs.getUser();</span>
-<span class="nc" id="L58">        String qtr = personalSchedule.getQuarter();</span>
-<span class="nc" id="L59">        String responseBody = ucsbCurriculumService.getJSONbyQtrEnrollCd(qtr, crs.getEnrollCd());</span>
-<span class="nc" id="L60">        jsons.add(responseBody);</span>
-<span class="nc" id="L61">        Course course = objectMapper.readValue(responseBody, Course.class);</span>
-<span class="nc" id="L62">        courseWithSchedule.setCourse(course);</span>
-<span class="nc" id="L63">        sections.add(courseWithSchedule);</span>
-<span class="nc" id="L64">      }</span>
-<span class="nc" id="L65">    }</span>
-<span class="nc" id="L66">    return sections;</span>
+<span class="fc" id="L57">        User u = crs.getUser();</span>
+<span class="fc" id="L58">        String qtr = personalSchedule.getQuarter();</span>
+<span class="fc" id="L59">        String responseBody = ucsbCurriculumService.getJSONbyQtrEnrollCd(qtr, crs.getEnrollCd());</span>
+<span class="fc" id="L60">        jsons.add(responseBody);</span>
+<span class="fc" id="L61">        Course course = objectMapper.readValue(responseBody, Course.class);</span>
+<span class="fc" id="L62">        courseWithSchedule.setCourse(course);</span>
+<span class="fc" id="L63">        sections.add(courseWithSchedule);</span>
+<span class="fc" id="L64">      }</span>
+<span class="fc" id="L65">    }</span>
+<span class="fc" id="L66">    return sections;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
