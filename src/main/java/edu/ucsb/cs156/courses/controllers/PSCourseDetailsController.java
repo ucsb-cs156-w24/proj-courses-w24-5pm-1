@@ -8,12 +8,10 @@ import edu.ucsb.cs156.courses.entities.PersonalSchedule;
 import edu.ucsb.cs156.courses.entities.User;
 import edu.ucsb.cs156.courses.models.CourseWithSchedule;
 import edu.ucsb.cs156.courses.models.CurrentUser;
-import edu.ucsb.cs156.courses.errors.EntityNotFoundException;
 import edu.ucsb.cs156.courses.repositories.PSCourseRepository;
 import edu.ucsb.cs156.courses.repositories.PersonalScheduleRepository;
 import edu.ucsb.cs156.courses.services.UCSBCurriculumService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "PS Course Details")
@@ -40,15 +37,14 @@ public class PSCourseDetailsController extends ApiController {
   @Operation(summary = "List all sections for a user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping(value = "/all", produces = "application/json")
-  public ArrayList<CourseWithSchedule> allSections()
-      throws JsonProcessingException {
+  public ArrayList<CourseWithSchedule> allSections() throws JsonProcessingException {
     CurrentUser currentUser = getCurrentUser();
     Iterable<PersonalSchedule> personalSchedules =
         personalScheduleRepository.findAllByUserId(currentUser.getUser().getId());
 
     ArrayList<CourseWithSchedule> sections = new ArrayList<CourseWithSchedule>();
     ArrayList<String> jsons = new ArrayList<String>();
-    for (PersonalSchedule personalSchedule : personalSchedules){
+    for (PersonalSchedule personalSchedule : personalSchedules) {
       Iterable<PSCourse> courses = coursesRepository.findAllByPsId(personalSchedule.getId());
       for (PSCourse crs : courses) {
         CourseWithSchedule courseWithSchedule = new CourseWithSchedule();

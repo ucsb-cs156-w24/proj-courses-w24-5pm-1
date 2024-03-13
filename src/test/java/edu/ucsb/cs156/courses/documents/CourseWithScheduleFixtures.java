@@ -1,7 +1,8 @@
 package edu.ucsb.cs156.courses.documents;
 
 public class CourseWithScheduleFixtures {
-    public static final String ONE_COURSE_WITH_SCHEDULE = """
+  public static final String ONE_COURSE_WITH_SCHEDULE =
+      """
         {
             "personalSchedule": {
                 "id": 1,
@@ -78,7 +79,8 @@ public class CourseWithScheduleFixtures {
             }
         }""";
 
-    public static final String THREE_COURSES_WITH_SCHEDULES = """
+  public static final String THREE_COURSES_WITH_SCHEDULES =
+      """
         [
             {
                 "personalSchedule": {
