@@ -87,7 +87,7 @@ describe("UserTable tests", () => {
       "course.classSections[0].enrollCode",
       "course.courseId",
       "course.title",
-      "Quarter",
+      "course.quarter",
     ];
     const testId = "CourseTable";
 
@@ -146,7 +146,7 @@ describe("UserTable tests", () => {
       "course.classSections[0].enrollCode",
       "course.courseId",
       "course.title",
-      "Quarter",
+      "course.quarter",
     ];
     const testId = "CourseTable";
 

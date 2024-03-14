@@ -45,7 +45,8 @@ export default function CourseTable({ courses, currentUser }) {
     },
     {
       Header: "Quarter",
-      accessor: (row) => yyyyqToQyy(row.course.quarter),
+      accessor: "course.quarter",
+      Cell: ({ value }) => yyyyqToQyy(value),
     },
   ];
   const columnsIfUser = [
