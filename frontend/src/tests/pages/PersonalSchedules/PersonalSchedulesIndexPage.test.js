@@ -200,4 +200,39 @@ describe("PersonalSchedulesIndexPage tests", () => {
       );
     });
   });
+
+  test("what happens when you click Add Schedule", async () => {
+    setupAdminUser();
+    const queryClient = new QueryClient();
+    axiosMock
+      .onGet("/api/personalschedules/all")
+      .reply(200, personalScheduleFixtures.threePersonalSchedules);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <PersonalSchedulesIndexPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    expect(
+      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    ).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
+      "3",
+    );
+
+    const addButton = screen.getByTestId("createButton");
+    expect(addButton).toBeInTheDocument();
+
+    fireEvent.click(addButton);
+
+    // await waitFor(() => {
+    //   expect(screen.getByText("Create New Personal Schedule")).toBeInTheDocument();
+    // });
+  });
 });
