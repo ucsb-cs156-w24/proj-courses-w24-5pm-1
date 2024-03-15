@@ -8,7 +8,7 @@ import mockConsole from "jest-mock-console";
 import CoursesIndexPage from "main/pages/Courses/PSCourseIndexPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { coursesFixtures } from "fixtures/pscourseFixtures";
+import { courseWithScheduleFixtures } from "fixtures/courseWithScheduleFixtures";
 
 const mockToast = jest.fn();
 jest.mock("react-toastify", () => {
@@ -50,7 +50,7 @@ describe("CoursesIndexPage tests", () => {
   test("renders without crashing for regular user", () => {
     setupUserOnly();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/courses/user/all").reply(200, []);
+    axiosMock.onGet("/api/courseDetails/all").reply(200, []);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -79,8 +79,8 @@ describe("CoursesIndexPage tests", () => {
     setupUserOnly();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/courses/user/all")
-      .reply(200, coursesFixtures.twoCourses);
+      .onGet("/api/courseDetails/all")
+      .reply(200, courseWithScheduleFixtures.threeCourseWithSchedules);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -92,20 +92,20 @@ describe("CoursesIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`),
-      ).toHaveTextContent("25");
+        screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
+      ).toHaveTextContent("1");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "26",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
   });
 
   test("renders two courses without crashing for admin user", async () => {
     setupAdminUser();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/courses/user/all")
-      .reply(200, coursesFixtures.twoCourses);
+      .onGet("/api/courseDetails/all")
+      .reply(200, courseWithScheduleFixtures.threeCourseWithSchedules);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -117,19 +117,19 @@ describe("CoursesIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`),
-      ).toHaveTextContent("25");
+        screen.getByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
+      ).toHaveTextContent("1");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "26",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
   });
 
   test("renders empty table when backend unavailable, user only", async () => {
     setupUserOnly();
 
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/courses/user/all").timeout();
+    axiosMock.onGet("/api/courseDetails/all").timeout();
 
     const restoreConsole = mockConsole();
 
@@ -146,12 +146,12 @@ describe("CoursesIndexPage tests", () => {
 
     const errorMessage = console.error.mock.calls[0][0];
     expect(errorMessage).toMatch(
-      "Error communicating with backend via GET on /api/courses/user/all",
+      "Error communicating with backend via GET on /api/courseDetails/all",
     );
     restoreConsole();
 
     expect(
-      screen.queryByTestId(`${testId}-cell-row-0-col-id`),
+      screen.queryByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
     ).not.toBeInTheDocument();
   });
 
@@ -159,8 +159,8 @@ describe("CoursesIndexPage tests", () => {
     setupAdminUser();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/courses/user/all")
-      .reply(200, coursesFixtures.twoCourses);
+      .onGet("/api/courseDetails/all")
+      .reply(200, courseWithScheduleFixtures.threeCourseWithSchedules);
     axiosMock
       .onDelete("/api/courses/user")
       .reply(200, "Course with id 25 was deleted");
@@ -174,11 +174,11 @@ describe("CoursesIndexPage tests", () => {
     );
 
     expect(
-      await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-    ).toHaveTextContent("25");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "26",
-    );
+      await screen.findByTestId(`${testId}-cell-row-0-col-personalSchedule.id`),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-personalSchedule.id`),
+    ).toHaveTextContent("2");
 
     const deleteButton = screen.getByTestId(
       `CourseTable-cell-row-0-col-Delete-button`,

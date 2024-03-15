@@ -6,6 +6,7 @@ import {
   onDeleteSuccess,
 } from "main/utils/CoursesUtils";
 import { hasRole } from "main/utils/currentUser";
+import { yyyyqToQyy } from "main/utils/quarterUtilities.js";
 
 export default function CourseTable({ courses, currentUser }) {
   // Stryker disable all : hard to test for query caching
@@ -23,19 +24,31 @@ export default function CourseTable({ courses, currentUser }) {
 
   const columns = [
     {
-      Header: "id",
-      accessor: "id",
+      Header: "Personal Schedule ID",
+      accessor: "personalSchedule.id",
+    },
+    {
+      Header: "Personal Schedule Name",
+      accessor: "personalSchedule.name",
     },
     {
       Header: "Enrollment Code",
-      accessor: "enrollCd",
+      accessor: "course.classSections[0].enrollCode",
     },
     {
-      Header: "Personal Schedule ID",
-      accessor: "psId",
+      Header: "Course ID",
+      accessor: "course.courseId",
+    },
+    {
+      Header: "Course Name",
+      accessor: "course.title",
+    },
+    {
+      Header: "Quarter",
+      accessor: "course.quarter",
+      Cell: ({ value }) => yyyyqToQyy(value),
     },
   ];
-
   const columnsIfUser = [
     ...columns,
     // ButtonColumn("Edit", "primary", editCallback, "PersonalSchedulesTable"),
